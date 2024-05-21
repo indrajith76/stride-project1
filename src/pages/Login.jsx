@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import GoogleLogin from "../components/GoogleLogin";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location?.state?.from?.pathname || "/";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +18,10 @@ const Login = () => {
 
     signIn(email, password);
   };
+  
+  if (user) {
+    navigate(from);
+  }
 
   return (
     <div className="hero min-h-screen bg-base-200">

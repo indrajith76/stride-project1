@@ -1,8 +1,13 @@
 import GoogleLogin from "../components/GoogleLogin";
 import useAuth from "../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Registration = () => {
-  const { createUser } = useAuth();
+  const { createUser, user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location?.state?.from?.pathname || "/";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +19,10 @@ const Registration = () => {
 
     createUser(email, password);
   };
+
+  if (user) {
+    navigate(from);
+  }
 
   return (
     <div className="hero min-h-screen bg-base-200">

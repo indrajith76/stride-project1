@@ -17,7 +17,12 @@ const Registration = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    createUser(email, password);
+    if (password.length <= 5) {
+      alert("Password should be at least 6 characters");
+      return;
+    }
+
+    createUser(name, email, password);
   };
 
   if (user) {

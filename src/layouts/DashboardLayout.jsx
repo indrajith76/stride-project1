@@ -1,6 +1,9 @@
 import { Outlet, Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
+  const { logOut } = useAuth();
+
   const sidebarData = [
     { link: "/", text: "Home" },
     { link: "/dashboard", text: "Dashboard" },
@@ -38,7 +41,12 @@ const DashboardLayout = () => {
           </Link>
         </div>
         <div className="flex-none hidden lg:block">
-          <button className="btn btn-sm text-white btn-error">LogOut</button>
+          <button
+            onClick={() => logOut()}
+            className="btn btn-sm text-white btn-error"
+          >
+            LogOut
+          </button>
         </div>
       </div>
       <div className="drawer lg:drawer-open">
@@ -56,7 +64,7 @@ const DashboardLayout = () => {
           <ul className="menu p-4 w-80 min-h-full bg-base-200">
             {/* Sidebar content here */}
             {sidebarData.map((data, idx) => (
-              <li>
+              <li key={idx}>
                 <Link to={`${data.link}`}>{data.text}</Link>
               </li>
             ))}

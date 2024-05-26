@@ -1,7 +1,10 @@
 import React from "react";
 import Banner from "../components/Banner";
+import { useLoaderData, Link } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
 
 const Home = () => {
+  const data = useLoaderData();
   return (
     <div>
       <Banner />
@@ -9,27 +12,22 @@ const Home = () => {
       <div className="container mx-auto">
         <h1 className="my-20 text-center text-3xl font-bold">Our Products</h1>
         <div className="grid grid-cols-3 gap-y-10 mx-auto">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">
-                  Shoes!
-                  <div className="badge badge-secondary">NEW</div>
-                </h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                  <div className="badge badge-outline">Fashion</div>
-                  <div className="badge badge-outline">Products</div>
-                </div>
-              </div>
-            </div>
-          ))}
+          {data
+            .sort(function (a, b) {
+              return b.id - a.id;
+            })
+            .slice(0, 6)
+            .map((item, idx) => (
+              <ProductCard item={item} key={idx} />
+            ))}
+        </div>
+        <div className="flex justify-center">
+          <Link
+            className="bg-gray-500 text-white py-1 px-10 rounded-lg my-16"
+            to="/products"
+          >
+            See more
+          </Link>
         </div>
 
         <div className="join join-vertical w-full my-20">
